@@ -43,7 +43,7 @@ int interpreter(char *words[]){
 }
 
 int script(char *words[]){
-	printf("Script");
+	printf("Script\n");
 
 	int errCode = 0;
 	char line[1000];
@@ -66,31 +66,31 @@ int script(char *words[]){
 }
 
 int unknown(){
-	printf("Unknown Command");
+	printf("Unknown Command\n");
 	return -1;
 }
 
 int run(){
-	printf("Run");
+	printf("Run\n");
 	return 0;
 }
 
 int print(){
-	printf("Print");
+	printf("Print\n");
 	return 0;
 }
 
 int set(){
-	printf("Set");
+	printf("Set\n");
 	return 0;
 }
 
 int quit(){
-	printf("Quit");
+	printf("Quit\n");
 	return 0;
 }
 
 int help(){
-	printf("Help");
+	printf("Help\n");
 	return 0;
 }

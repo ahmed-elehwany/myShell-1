@@ -11,14 +11,17 @@ extern int interpreter(char *words[]);
 
 int main(){
 	char shellBuffer[1000];
-
-	printf("Welcome to the Muhammad Huzaifa Elahi shell!\n");
-	printf("Version 1.0 Created January 2020\n");
-	printf("$ ");
-	fgets(shellBuffer, 1000, stdin);
-	shellBuffer[strlen(shellBuffer)-1] = '\0';
 	
-	return parse(shellBuffer);
+	while(1){
+		printf("Welcome to the Muhammad Huzaifa Elahi shell!\n");
+		printf("Version 1.0 Created January 2020\n");
+		printf("$ ");
+		fgets(shellBuffer, 1000, stdin);
+		shellBuffer[strlen(shellBuffer)-1] = '\0';
+		parse(shellBuffer);
+	}
+
+	return 0;
 }
 
 int parse(char string[]){
