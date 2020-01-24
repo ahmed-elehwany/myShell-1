@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-int parse(char string[]); // Function declarations
+// Function Declarations
+int parse(char string[]);
+extern int interpreter(char *words[]);
 
 int main(){
 	char shellBuffer[1000];

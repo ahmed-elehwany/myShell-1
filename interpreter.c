@@ -13,8 +13,10 @@ const char *quitCmd = "quit";
 const char *helpCmd = "help";
 
 // Function Declarations
+extern int parse(char string[]);
 int interpreter(char *words[]);
 int unknown();
+int script(char *words[]);
 int run();
 int print();
 int set();
@@ -22,8 +24,8 @@ int quit();
 int help();
 
 int interpreter(char *words[]){
-	//if(words[0][0] == '.' || words[0][1] == '/') 
-	
+	if(words[0][0] == '.' || words[0][1] == '/') 
+		return script(words);
 	if(strcmp(words[0], runCmd) == 0)
 		return run();
 	else if(strcmp(words[0], printCmd) == 0)
@@ -38,6 +40,29 @@ int interpreter(char *words[]){
 		return unknown();
 
 	return 0;
+}
+
+int script(char *words[]){
+	printf("Script");
+
+	int errCode = 0;
+	char line[1000];
+
+	FILE *p = fopen(words[0]+2, "rt");
+
+	fgets(line, 999, p);
+	while(!feof(p)){
+		errCode = parse(line);
+		if(errCode != 0){
+			fclose(p);
+			return errCode;
+		}
+		fgets(line, 999, p);
+	}
+
+	fclose(p);
+
+	return errCode;
 }
 
 int unknown(){
