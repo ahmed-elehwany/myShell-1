@@ -66,7 +66,7 @@ int script(char *words[]){
 }
 
 int unknown(){
-	printf("Unknown Command\n");
+	printf("Unknown command\n");
 	return -1;
 }
 
@@ -91,6 +91,13 @@ int quit(){
 }
 
 int help(){
-	printf("Help\n");
+
+	printf("Command (case sensative)           Description\n");
+	printf("     help 			      	Displays all the commands\n");
+	printf("     quit 				    Exits / terminates the shell with \"Bye!\"\n");
+	printf("set VAR STRING 			    Assigns a value to shell memory\n");
+	printf("   print VAR 				Displays the STRING assigned to VAR\n");
+	printf("run SCRIPT.TXT 				Executes the file SCRIPT.TXT\n");
+
 	return 0;
 }
