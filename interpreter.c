@@ -86,8 +86,8 @@ int set(){
 }
 
 int quit(){
-	printf("Quit\n");
-	return 0;
+	printf("Bye!\n");
+	return 2;
 }
 
 int help(){

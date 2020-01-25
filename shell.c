@@ -11,14 +11,26 @@ extern int interpreter(char *words[]);
 
 int main(){
 	char shellBuffer[1000];
-	
+	int errCode = 0;
+
 	while(1){
 		printf("Welcome to the Muhammad Huzaifa Elahi shell!\n");
 		printf("Version 1.0 Created January 2020\n");
 		printf("$ ");
 		fgets(shellBuffer, 1000, stdin);
 		shellBuffer[strlen(shellBuffer)-1] = '\0';
-		parse(shellBuffer);
+		errCode = parse(shellBuffer);
+		switch(errCode){
+			case 0:
+				// No error, continue
+				break;
+			case 2: 
+				// Terminate shell (quit)
+				return 0;
+			default: 
+				// continue
+				break;
+		}
 	}
 
 	return 0;
