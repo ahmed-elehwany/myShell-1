@@ -14,12 +14,14 @@ const char *helpCmd = "help";
 
 // Function Declarations
 extern int parse(char string[]);
+extern int addNode(char *key, char *value);
+extern int printValue(char *key);
 int interpreter(char *words[]);
 int unknown();
 int script(char *words[]);
 int run();
-int print();
-int set();
+int print(char*key);
+int set(char *key, char *value);
 int quit();
 int help();
 
@@ -29,9 +31,9 @@ int interpreter(char *words[]){
 	if(strcmp(words[0], runCmd) == 0)
 		return run();
 	else if(strcmp(words[0], printCmd) == 0)
-		return print();
+		return print(words[1]);
 	else if (strcmp(words[0], setCmd) == 0)
-		return set();
+		return set(words[1], words[2]);
 	else if (strcmp(words[0], quitCmd) == 0)
 		return quit();
 	else if (strcmp(words[0], helpCmd) == 0)
@@ -75,13 +77,13 @@ int run(){
 	return 0;
 }
 
-int print(){
-	printf("Print\n");
+int print(char*key){
+	printValue(key);
 	return 0;
 }
 
-int set(){
-	printf("Set\n");
+int set(char*key, char*value){
+	addNode(key, value);
 	return 0;
 }
 
