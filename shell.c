@@ -5,12 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Constants
+const int SHELL_LENGTH = 1000;
+const int MAX_WORD_COUNT = 100;
+const int MAX_WORD_LENGTH = 100;
+
 // Function Declarations
 int parse(char string[]);
 extern int interpreter(char *words[]);
 
 int main(){
-	char shellBuffer[1000];
+	char shellBuffer[SHELL_LENGTH];
 	int errCode = 0;
 
 	printf("Welcome to the Muhammad Huzaifa Elahi shell!\n");
@@ -18,7 +23,7 @@ int main(){
 
 	while(1){
 		printf("$ ");
-		fgets(shellBuffer, 1000, stdin);
+		fgets(shellBuffer, SHELL_LENGTH, stdin);
 		shellBuffer[strlen(shellBuffer)-1] = '\0';
 		errCode = parse(shellBuffer);
 		switch(errCode){
@@ -38,19 +43,19 @@ int main(){
 }
 
 int parse(char string[]){
-	char temp[200];
-	char **words = calloc(100, sizeof(char*));
+	char temp[MAX_WORD_LENGTH];
+	char **words = calloc(MAX_WORD_COUNT, sizeof(char*));
 
 	int inputIndex, tokenIndex;
 	int wordIndex = 0;
 
-	for(inputIndex = 0; string[inputIndex]== ' ' && inputIndex < 1000; inputIndex++); // Skip white spaces
+	for(inputIndex = 0; string[inputIndex]== ' ' && inputIndex < SHELL_LENGTH; inputIndex++); // Skip white spaces
 
 	// Move forward while input has not terminated
-	while(string[inputIndex] != '\0' && inputIndex < 1000){
+	while(string[inputIndex] != '\0' && inputIndex < SHELL_LENGTH){
 		
 		// Copy token from input
-		for(tokenIndex = 0; string[inputIndex] != '\0' && string[inputIndex] != ' ' && inputIndex < 1000; inputIndex++, tokenIndex++){
+		for(tokenIndex = 0; string[inputIndex] != '\0' && string[inputIndex] != ' ' && inputIndex < SHELL_LENGTH; inputIndex++, tokenIndex++){
 			temp[tokenIndex] = string[inputIndex]; // Extract a word
 		}
 

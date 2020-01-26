@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Constants
+const int MAX_STRING_LENGTH = 1000;
+
+// Functional Declarations
 int printValue(char *key);
 int addNode(char *key, char *value);
 
@@ -30,12 +34,13 @@ int printValue(char* key){
     return -1; // Did not find key
 }
 
-// TODO: Update & Overwrite
 int addNode(char *key , char *value) {
     // Create and allocate new node
     struct SHELL_MEM *newNode = (struct SHELL_MEM*) malloc(sizeof(struct SHELL_MEM));
-    newNode->currVariable = key;
-    newNode->currValue = value;
+    newNode->currVariable = malloc(MAX_STRING_LENGTH*sizeof(char));
+    newNode->currValue = malloc(MAX_STRING_LENGTH*sizeof(char));
+    strcpy(newNode->currVariable, key);
+    strcpy(newNode->currValue, value);
 
     // If Head Empty, insert there
     if(shellMemory==NULL) {
@@ -45,7 +50,7 @@ int addNode(char *key , char *value) {
 
     if(strcmp(shellMemory->currVariable, key) == 0){
             // Found key in memory, overwrite
-            shellMemory->currValue = value;
+            strcpy(shellMemory->currValue, value);
             free(newNode);
             return 0;    
     }
@@ -56,7 +61,7 @@ int addNode(char *key , char *value) {
         temp = temp->next;
         if(strcmp(temp->currVariable, key) == 0){
             // Found key in memory, overwrite
-            temp->currValue = value;
+            strcpy(temp->currValue, value);
             free(newNode);
             return 0;    
         }

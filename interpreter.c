@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-// String constants
+// Constants
+const int MAX_LINE_LENGTH = 1000;
+
 const char *runCmd = "run";
 const char *printCmd = "print";
 const char *setCmd = "set";
@@ -46,12 +48,12 @@ int script(FILE *filePtr){
 	printf("Script\n");
 
 	int errCode = 0;
-	char line[1000];
+	char line[MAX_LINE_LENGTH];
 
-	fgets(line, 1000, filePtr);
+	fgets(line, MAX_LINE_LENGTH, filePtr);
 	while(!feof(filePtr)){
 		errCode = parse(line);
-		fgets(line, 1000, filePtr);
+		fgets(line, MAX_LINE_LENGTH, filePtr);
 	}
 
 	fclose(filePtr);
@@ -80,8 +82,8 @@ int print(char*key){
 
 int set(char*words[]){
 	int i = 3;
-	char string[1000];
-	char key[1000];
+	char string[MAX_LINE_LENGTH];
+	char key[MAX_LINE_LENGTH];
 	if(words[1] != NULL){
 		strcpy(key, words[1]);
 	} else{
