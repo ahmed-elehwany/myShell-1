@@ -18,22 +18,20 @@ extern int addNode(char *key, char *value);
 extern int printValue(char *key);
 int interpreter(char *words[]);
 int unknown();
-int script(char *words[]);
-int run();
+int script(FILE *filePtr);
+int run(char *file);
 int print(char*key);
-int set(char *key, char *value);
+int set(char *words[]);
 int quit();
 int help();
 
 int interpreter(char *words[]){
-	if(words[0][0] == '.' || words[0][1] == '/') 
-		return script(words);
 	if(strcmp(words[0], runCmd) == 0)
-		return run();
+		return run(words[1]);
 	else if(strcmp(words[0], printCmd) == 0)
 		return print(words[1]);
 	else if (strcmp(words[0], setCmd) == 0)
-		return set(words[1], words[2]);
+		return set(words);
 	else if (strcmp(words[0], quitCmd) == 0)
 		return quit();
 	else if (strcmp(words[0], helpCmd) == 0)
@@ -44,25 +42,23 @@ int interpreter(char *words[]){
 	return 0;
 }
 
-int script(char *words[]){
+int script(FILE *filePtr){
 	printf("Script\n");
 
 	int errCode = 0;
 	char line[1000];
 
-	FILE *p = fopen(words[0]+2, "rt");
-
-	fgets(line, 999, p);
-	while(!feof(p)){
+	fgets(line, 999, filePtr);
+	while(!feof(filePtr)){
 		errCode = parse(line);
 		if(errCode != 0){
-			fclose(p);
+			fclose(filePtr);
 			return errCode;
 		}
-		fgets(line, 999, p);
+		fgets(line, 999, filePtr);
 	}
 
-	fclose(p);
+	fclose(filePtr);
 
 	return errCode;
 }
@@ -72,9 +68,13 @@ int unknown(){
 	return -1;
 }
 
-int run(){
-	printf("Run\n");
-	return 0;
+int run(char *file){
+	FILE *filePtr = fopen(file, "r");
+	if(filePtr == NULL){
+		printf("Script not found\n");
+		return -1;
+	}
+	return script(filePtr);
 }
 
 int print(char*key){
@@ -82,8 +82,30 @@ int print(char*key){
 	return 0;
 }
 
-int set(char*key, char*value){
-	addNode(key, value);
+int set(char*words[]){
+	int i = 3;
+	char string[1000];
+	char key[1000];
+	if(words[1] != NULL){
+		strcpy(key, words[1]);
+	} else{
+		printf("Invalid Variable\n");
+		return -1;
+	}
+
+	if(words[2] != NULL){
+		strcpy(string, words[2]);
+	} else{
+		printf("Invalid String\n");
+		return -1;
+	}
+	while (words[i] != NULL){
+		strcat(string, " ");
+		strcat(string, words[i]);
+		i++;
+	}
+	addNode(words[1], string);
+	printf("Variable: %s\nValue: %s\n", words[1], string);
 	return 0;
 }
 

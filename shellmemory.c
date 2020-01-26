@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 int printValue(char *key);
 int addNode(char *key, char *value);
@@ -12,7 +11,7 @@ int addNode(char *key, char *value);
 // Keep track of Memory with Head and Tail
 struct SHELL_MEM {
     struct SHELL_MEM *next;
-    char *currKey;
+    char *currVariable;
     char *currValue;
 }   *shellMemory = NULL, *tail = NULL;
 
@@ -21,19 +20,21 @@ int printValue(char* key){
     start = shellMemory;
 
     while(start != NULL){
-        if(strcmp(start->currKey, key) == 0){
+        if(strcmp(start->currVariable, key) == 0){
             // Found key in memory
-            printf("Key: %s\nValue: %s\n", key, start->currValue);
+            printf("Variable: %s\nValue: %s\n", key, start->currValue);
             return 0;
         }
         start = start->next;
     }
-    return -1;
+    printf("Variable does not exist\n");
+    return -1; // Did not find key
 }
 
 int addNode(char *key , char *value) {
+    // Create and allocate new node
     struct SHELL_MEM *newNode = (struct SHELL_MEM*) malloc(sizeof(struct SHELL_MEM));
-    newNode->currKey = key;
+    newNode->currVariable = key;
     newNode->currValue = value;
 
     // If Head Empty, insert there
