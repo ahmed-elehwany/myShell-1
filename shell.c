@@ -44,7 +44,7 @@ int parse(char string[]){
 	int inputIndex, tokenIndex;
 	int wordIndex = 0;
 
-	for(inputIndex = 0; string[inputIndex]==' ' && inputIndex < 1000; inputIndex++); // Skip white spaces
+	for(inputIndex = 0; string[inputIndex]== ' ' && inputIndex < 1000; inputIndex++); // Skip white spaces
 
 	// Move forward while input has not terminated
 	while(string[inputIndex] != '\0' && inputIndex < 1000){

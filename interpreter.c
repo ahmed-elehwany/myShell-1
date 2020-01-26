@@ -48,14 +48,10 @@ int script(FILE *filePtr){
 	int errCode = 0;
 	char line[1000];
 
-	fgets(line, 999, filePtr);
+	fgets(line, 1000, filePtr);
 	while(!feof(filePtr)){
 		errCode = parse(line);
-		if(errCode != 0){
-			fclose(filePtr);
-			return errCode;
-		}
-		fgets(line, 999, filePtr);
+		fgets(line, 1000, filePtr);
 	}
 
 	fclose(filePtr);
