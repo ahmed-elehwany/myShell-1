@@ -39,13 +39,12 @@ int script(FILE *filePtr){
 	int errCode = 0;
 	char line[MAX_LINE_LENGTH];
 
-	fgets(line, MAX_LINE_LENGTH, filePtr);
 	while(!feof(filePtr)){
+		fgets(line, MAX_LINE_LENGTH, filePtr);
 		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
 			line[strlen(line)-1] = '\0';
 		}
 		errCode = parse(line);
-		fgets(line, MAX_LINE_LENGTH, filePtr);
 	}
 
 	fclose(filePtr);
@@ -96,6 +95,7 @@ int set(char*words[]){
 		printf("Invalid String\n");
 		return -1;
 	}
+
 	while (words[i] != NULL){
 		strcat(string, " ");
 		strcat(string, words[i]);
@@ -106,6 +106,7 @@ int set(char*words[]){
 	if(errCode){
 		printf("Shell Memory Full\n");
 	}
+
 	return errCode;
 }
 

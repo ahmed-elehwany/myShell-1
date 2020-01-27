@@ -67,7 +67,9 @@ int parse(char string[]){
 		inputIndex++;
 		wordIndex++;
 	}
+
 	int errCode = interpreter(words);
 	free(words);
+
 	return errCode;
 }
