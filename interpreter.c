@@ -68,14 +68,21 @@ int run(char *file){
 }
 
 int print(char *var){
-	printValue(var);
+	char* value = getValue(var);
+	if(value == NULL){
+		printf("Variable does not exist\n");
+		return -1;
+	}
+	printf("%s\n", value);
 	return 0;
 }
 
 int set(char*words[]){
 	int i = 3;
+	int errCode = 0;
 	char string[MAX_LINE_LENGTH];
 	char key[MAX_LINE_LENGTH];
+
 	if(words[1] != NULL){
 		strcpy(key, words[1]);
 	} else{
@@ -94,9 +101,12 @@ int set(char*words[]){
 		strcat(string, words[i]);
 		i++;
 	}
-	addNode(words[1], string);
-	printf("Variable: %s\nValue: %s\n", words[1], string);
-	return 0;
+
+	errCode = addNode(words[1], string);
+	if(errCode){
+		printf("Shell Memory Full\n");
+	}
+	return errCode;
 }
 
 int quit(){

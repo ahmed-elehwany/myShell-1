@@ -13,15 +13,13 @@ const int MAX_STRING_LENGTH = 1000;
 
 struct MEM shellMemory[1000];
 
-int printValue(char* var){
+char* getValue(char* var){
     for(int i = 0; i < MAX_SHELL_MEMORY; i++){
         if ((shellMemory[i].var != NULL) && (strcmp(shellMemory[i].var, var) == 0)){
-            printf("Variable: %s\nValue: %s\n", var, shellMemory[i].value);
-            return 0;
+            return shellMemory[i].value;
         }
     }
-    printf("Variable does not exist\n");
-    return -1; // Did not find key
+    return NULL; // Did not find key
 }
 
 int addNode(char *var , char *value) {

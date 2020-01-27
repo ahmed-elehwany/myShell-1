@@ -9,7 +9,7 @@ extern const int MAX_SHELL_MEMORY;
 extern const int MAX_STRING_LENGTH;
 
 // Functional Declarations
-int printValue(char *var);
+char* getValue(char *var);
 int addNode(char *var, char *value);
 
 // Keep track of variables in memory
