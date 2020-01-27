@@ -18,7 +18,7 @@ int interpreter(char *words[]);
 int unknown();
 int script(FILE *filePtr);
 int run(char *file);
-int print(char*key);
+int print(char*var);
 int set(char *words[]);
 int quit();
 int help();

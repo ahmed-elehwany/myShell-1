@@ -36,8 +36,6 @@ int interpreter(char *words[]){
 }
 
 int script(FILE *filePtr){
-	printf("Script\n");
-
 	int errCode = 0;
 	char line[MAX_LINE_LENGTH];
 
@@ -69,8 +67,8 @@ int run(char *file){
 	return script(filePtr);
 }
 
-int print(char*key){
-	printValue(key);
+int print(char *var){
+	printValue(var);
 	return 0;
 }
 

@@ -8,57 +8,42 @@
 #include "shellmemory.h"
 
 // Constants
+const int MAX_SHELL_MEMORY = 1000;
 const int MAX_STRING_LENGTH = 1000;
 
-int printValue(char* key){
-    temp = shellMemory;
+struct MEM shellMemory[1000];
 
-    while(temp != NULL){
-        if(strcmp(temp->currVariable, key) == 0){
-            // Found key in memory
-            printf("Variable: %s\nValue: %s\n", key, temp->currValue);
+int printValue(char* var){
+    for(int i = 0; i < MAX_SHELL_MEMORY; i++){
+        if ((shellMemory[i].var != NULL) && (strcmp(shellMemory[i].var, var) == 0)){
+            printf("Variable: %s\nValue: %s\n", var, shellMemory[i].value);
             return 0;
         }
-        temp = temp->next;
     }
     printf("Variable does not exist\n");
     return -1; // Did not find key
 }
 
-int addNode(char *key , char *value) {
-    // Create and allocate new node
-    struct SHELL_MEM *newNode = (struct SHELL_MEM*) malloc(sizeof(struct SHELL_MEM));
-    newNode->currVariable = malloc(MAX_STRING_LENGTH*sizeof(char));
-    newNode->currValue = malloc(MAX_STRING_LENGTH*sizeof(char));
-    strcpy(newNode->currVariable, key);
-    strcpy(newNode->currValue, value);
+int addNode(char *var , char *value) {
 
-    // If Head Empty, insert there
-    if(shellMemory==NULL) {
-        shellMemory = newNode;
-        return 0;
-    }
-
-    if(strcmp(shellMemory->currVariable, key) == 0){
-            // Found key in memory, overwrite
-            strcpy(shellMemory->currValue, value);
-            free(newNode);
-            return 0;    
-    }
-   
-    // Insert at end of list
-    temp = shellMemory;
-    while(temp->next!=NULL){
-        temp = temp->next;
-        if(strcmp(temp->currVariable, key) == 0){
-            // Found key in memory, overwrite
-            strcpy(temp->currValue, value);
-            free(newNode);
-            return 0;    
+    for(int i = 0; i < MAX_SHELL_MEMORY; i++){
+        // Insert in first empty struct in array
+        if(shellMemory[i].var == NULL){
+            // Create and allocate new node
+            struct MEM newNode;
+            newNode.var = malloc(MAX_STRING_LENGTH*sizeof(char));
+            newNode.value = malloc(MAX_STRING_LENGTH*sizeof(char));
+            strcpy(newNode.var, var);
+            strcpy(newNode.value, value);
+            shellMemory[i] = newNode;
+            return 0;
+        // Overwrite
+        } else if (strcmp(shellMemory[i].var, var) == 0){
+            strcpy(shellMemory[i].value, value);
+            return 0;
         }
     }
 
-    temp->next = newNode; 
-    return 0;
+    return -1; // Full
 }
 
