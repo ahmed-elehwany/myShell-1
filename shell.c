@@ -24,7 +24,9 @@ int main(){
 	while(1){
 		printf("$ ");
 		fgets(shellBuffer, SHELL_LENGTH, stdin);
-		shellBuffer[strlen(shellBuffer)-1] = '\0';
+		while(shellBuffer[strlen(shellBuffer)-1] == '\r' || shellBuffer[strlen(shellBuffer)-1] == '\n'){
+			shellBuffer[strlen(shellBuffer)-1] = '\0';
+		}
 		errCode = parse(shellBuffer);
 		switch(errCode){
 			case 0:

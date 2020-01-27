@@ -52,6 +52,9 @@ int script(FILE *filePtr){
 
 	fgets(line, MAX_LINE_LENGTH, filePtr);
 	while(!feof(filePtr)){
+		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
+			line[strlen(line)-1] = '\0';
+		}
 		errCode = parse(line);
 		fgets(line, MAX_LINE_LENGTH, filePtr);
 	}
@@ -114,7 +117,7 @@ int quit(){
 
 int help(){
 
-	printf("Command (case sensative)           Description\n");
+	printf("Command (case sensitive)           Description\n");
 	printf("     help 			      	Displays all the commands\n");
 	printf("     quit 				    Exits / terminates the shell with \"Bye!\"\n");
 	printf("set VAR STRING 			    Assigns a value to shell memory\n");
