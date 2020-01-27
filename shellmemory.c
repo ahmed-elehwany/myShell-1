@@ -5,19 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "shellmemory.h"
+
 // Constants
 const int MAX_STRING_LENGTH = 1000;
-
-// Functional Declarations
-int printValue(char *key);
-int addNode(char *key, char *value);
-
-// Keep track of Memory with Head and Tail
-struct SHELL_MEM {
-    struct SHELL_MEM *next;
-    char *currVariable;
-    char *currValue;
-}   *shellMemory, *temp;
 
 int printValue(char* key){
     temp = shellMemory;

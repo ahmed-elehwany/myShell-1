@@ -5,14 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "shell.h"
+#include "interpreter.h"
+
 // Constants
 const int SHELL_LENGTH = 1000;
 const int MAX_WORD_COUNT = 100;
 const int MAX_WORD_LENGTH = 100;
-
-// Function Declarations
-int parse(char string[]);
-extern int interpreter(char *words[]);
 
 int main(){
 	char shellBuffer[SHELL_LENGTH];

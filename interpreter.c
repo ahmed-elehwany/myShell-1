@@ -5,27 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "interpreter.h"
+#include "shellmemory.h"
+#include "shell.h"
+
 // Constants
 const int MAX_LINE_LENGTH = 1000;
 
-const char *runCmd = "run";
-const char *printCmd = "print";
-const char *setCmd = "set";
-const char *quitCmd = "quit";
-const char *helpCmd = "help";
-
-// Function Declarations
-extern int parse(char string[]);
-extern int addNode(char *key, char *value);
-extern int printValue(char *key);
-int interpreter(char *words[]);
-int unknown();
-int script(FILE *filePtr);
-int run(char *file);
-int print(char*key);
-int set(char *words[]);
-int quit();
-int help();
+const char runCmd[] = "run";
+const char printCmd[] = "print";
+const char setCmd[] = "set";
+const char quitCmd[] = "quit";
+const char helpCmd[] = "help";
 
 int interpreter(char *words[]){
 	if(strcmp(words[0], runCmd) == 0)
