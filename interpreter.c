@@ -41,10 +41,16 @@ int script(FILE *filePtr){
 
 	while(!feof(filePtr)){
 		fgets(line, MAX_LINE_LENGTH, filePtr);
-		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
+
+		if(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
 			line[strlen(line)-1] = '\0';
 		}
+
 		errCode = parse(line);
+		if(errCode != 0){
+			fclose(filePtr);
+			return errCode;
+		}
 	}
 
 	fclose(filePtr);
@@ -58,20 +64,32 @@ int unknown(){
 }
 
 int run(char *file){
+	if(file == NULL){
+		printf("Please enter a script\n");
+		return -1;
+	}
+
 	FILE *filePtr = fopen(file, "r");
 	if(filePtr == NULL){
 		printf("Script not found\n");
 		return -1;
 	}
+
 	return script(filePtr);
 }
 
 int print(char *var){
+	if(var == NULL){
+		printf("Please enter a variable\n");
+		return -1;
+	}
+
 	char* value = getValue(var);
 	if(value == NULL){
 		printf("Variable does not exist\n");
 		return -1;
 	}
+
 	printf("%s\n", value);
 	return 0;
 }
@@ -80,31 +98,25 @@ int set(char*words[]){
 	int i = 3;
 	int errCode = 0;
 	char string[MAX_LINE_LENGTH];
-	char key[MAX_LINE_LENGTH];
+	char var[MAX_LINE_LENGTH];
 
 	if(words[1] != NULL){
-		strcpy(key, words[1]);
+		strcpy(var, words[1]);
 	} else{
-		printf("Invalid Variable\n");
+		printf("Please enter a variable\n");
 		return -1;
 	}
 
 	if(words[2] != NULL){
 		strcpy(string, words[2]);
 	} else{
-		printf("Invalid String\n");
+		printf("Please enter a string\n");
 		return -1;
-	}
-
-	while (words[i] != NULL){
-		strcat(string, " ");
-		strcat(string, words[i]);
-		i++;
 	}
 
 	errCode = addNode(words[1], string);
 	if(errCode){
-		printf("Shell Memory Full\n");
+		printf("Shell memory full\n");
 	}
 
 	return errCode;
@@ -117,10 +129,10 @@ int quit(){
 
 int help(){
 
-	printf("Command (case sensitive)           Description\n");
+	printf("Command (case sensitive)         		  Description\n");
 	printf("     help 			      	Displays all the commands\n");
-	printf("     quit 				    Exits / terminates the shell with \"Bye!\"\n");
-	printf("set VAR STRING 			    Assigns a value to shell memory\n");
+	printf("     quit 			        Exits / terminates the shell with \"Bye!\"\n");
+	printf("set VAR STRING 			    	Assigns a value to shell memory\n");
 	printf("   print VAR 				Displays the STRING assigned to VAR\n");
 	printf("run SCRIPT.TXT 				Executes the file SCRIPT.TXT\n");
 

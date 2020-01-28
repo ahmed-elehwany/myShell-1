@@ -22,10 +22,16 @@ int main(){
 
 	while(1){
 		printf("$ ");
-		fgets(shellBuffer, SHELL_LENGTH, stdin);
-		while(shellBuffer[strlen(shellBuffer)-1] == '\r' || shellBuffer[strlen(shellBuffer)-1] == '\n'){
+
+		if(fgets(shellBuffer, SHELL_LENGTH, stdin) == NULL){
+			printf("Unable to retrieve process input, please try again\n");
+			return 0;;
+		}
+
+		if(shellBuffer[strlen(shellBuffer)-1] == '\r' || shellBuffer[strlen(shellBuffer)-1] == '\n'){
 			shellBuffer[strlen(shellBuffer)-1] = '\0';
 		}
+
 		errCode = parse(shellBuffer);
 		switch(errCode){
 			case 0:
@@ -44,6 +50,11 @@ int main(){
 }
 
 int parse(char string[]){
+	if(string == NULL || strlen(string) == 0){
+		printf("Please enter a valid command\n");
+		return -1;
+	}
+
 	char temp[MAX_WORD_LENGTH];
 	char **words = calloc(MAX_WORD_COUNT, sizeof(char*));
 
