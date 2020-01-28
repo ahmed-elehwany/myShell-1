@@ -28,7 +28,7 @@ int main(){
 			return 0;;
 		}
 
-		if(shellBuffer[strlen(shellBuffer)-1] == '\r' || shellBuffer[strlen(shellBuffer)-1] == '\n'){
+		while(shellBuffer[strlen(shellBuffer)-1] == '\r' || shellBuffer[strlen(shellBuffer)-1] == '\n'){
 			shellBuffer[strlen(shellBuffer)-1] = '\0';
 		}
 

@@ -42,11 +42,12 @@ int script(FILE *filePtr){
 	while(!feof(filePtr)){
 		fgets(line, MAX_LINE_LENGTH, filePtr);
 
-		if(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
+		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
 			line[strlen(line)-1] = '\0';
 		}
 
 		errCode = parse(line);
+		//TODO: CLOSE ONLY SCRIPT ON QUIT, NOT TERMINAL
 		if(errCode != 0){
 			fclose(filePtr);
 			return errCode;
