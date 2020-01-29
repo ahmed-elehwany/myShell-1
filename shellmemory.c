@@ -29,8 +29,8 @@ int addNode(char *var , char *value) {
         if(shellMemory[i].var == NULL){
             // Create and allocate new node
             struct MEM newNode;
-            newNode.var = malloc(MAX_STRING_LENGTH*sizeof(char));
-            newNode.value = malloc(MAX_STRING_LENGTH*sizeof(char));
+            newNode.var = calloc(MAX_STRING_LENGTH, sizeof(char));
+            newNode.value = calloc(MAX_STRING_LENGTH, sizeof(char));
             strcpy(newNode.var, var);
             strcpy(newNode.value, value);
             shellMemory[i] = newNode;
