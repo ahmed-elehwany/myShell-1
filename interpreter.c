@@ -37,11 +37,13 @@ int interpreter(char *words[]){
 
 int script(FILE *filePtr){
 	int errCode = 0;
-	char line[MAX_LINE_LENGTH];
+	char *line = calloc(MAX_LINE_LENGTH, sizeof(char));
 
 	while(!feof(filePtr)){
-		fgets(line, MAX_LINE_LENGTH, filePtr);
-
+		if(fgets(line, MAX_LINE_LENGTH, filePtr) == NULL){
+			printf("Unable to retrieve file input, please try again\n");
+			return 0;;
+		}
 		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
 			line[strlen(line)-1] = '\0';
 		}
@@ -54,6 +56,7 @@ int script(FILE *filePtr){
 		}
 	}
 
+	free(line);
 	fclose(filePtr);
 
 	return errCode;
@@ -98,24 +101,20 @@ int print(char *var){
 int set(char*words[]){
 	int i = 3;
 	int errCode = 0;
-	char string[MAX_LINE_LENGTH];
-	char var[MAX_LINE_LENGTH];
 
-	if(words[1] != NULL){
-		strcpy(var, words[1]);
-	} else{
+	// Check var
+	if(words[1] == NULL){
 		printf("Please enter a variable\n");
 		return -1;
 	}
 
-	if(words[2] != NULL){
-		strcpy(string, words[2]);
-	} else{
+	// Check string
+	if(words[2] == NULL){
 		printf("Please enter a string\n");
 		return -1;
 	}
 
-	errCode = addNode(words[1], string);
+	errCode = addNode(words[1], words[2]);
 	if(errCode){
 		printf("Shell memory full\n");
 	}

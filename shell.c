@@ -14,7 +14,7 @@ const int MAX_WORD_COUNT = 100;
 const int MAX_WORD_LENGTH = 100;
 
 int main(){
-	char shellBuffer[SHELL_LENGTH];
+	char *shellBuffer = calloc(SHELL_LENGTH, sizeof(char));
 	int errCode = 0;
 
 	printf("Welcome to the Muhammad Huzaifa Elahi shell!\n");
@@ -39,13 +39,15 @@ int main(){
 				break;
 			case 2: 
 				// Terminate shell (quit)
+				free(shellBuffer);
 				return 0;
 			default: 
 				// continue
 				break;
 		}
 	}
-
+	
+	free(shellBuffer);
 	return 0;
 }
 
@@ -55,7 +57,7 @@ int parse(char string[]){
 		return -1;
 	}
 
-	char temp[MAX_WORD_LENGTH];
+	char *temp = calloc(MAX_WORD_LENGTH, sizeof(char));
 	char **words = calloc(MAX_WORD_COUNT, sizeof(char*));
 
 	int inputIndex, tokenIndex;
@@ -72,6 +74,7 @@ int parse(char string[]){
 		}
 
 		// Add string terminator to token and add token to word array
+		words[wordIndex] = calloc(MAX_WORD_LENGTH, sizeof(char));
 		temp[tokenIndex] = '\0'; 
 		words[wordIndex] = strdup(temp);
 
@@ -80,6 +83,10 @@ int parse(char string[]){
 	}
 
 	int errCode = interpreter(words);
+	for (int i = 0; i < MAX_WORD_COUNT; i++ ){
+    	free(words[i]);
+	}
+	free(temp);
 	free(words);
 
 	return errCode;
