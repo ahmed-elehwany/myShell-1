@@ -44,7 +44,7 @@ int script(FILE *filePtr){
 	while(!feof(filePtr)){
 		if(fgets(line, MAX_LINE_LENGTH, filePtr) == NULL){
 			printf("Unable to retrieve file input, please try again\n");
-			return 0;;
+			return 0;
 		}
 		while(line[strlen(line)-1] == '\r' || line[strlen(line)-1] == '\n'){
 			line[strlen(line)-1] = '\0';
@@ -53,6 +53,7 @@ int script(FILE *filePtr){
 		errCode = parse(line);
 		//TODO: CLOSE ONLY SCRIPT ON QUIT, NOT TERMINAL
 		if(errCode != 0){
+			free(line);
 			fclose(filePtr);
 			return errCode;
 		}
