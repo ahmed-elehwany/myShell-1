@@ -12,6 +12,8 @@
 // Constants
 const int MAX_LINE_LENGTH = 1000;
 
+int recursionCount = 0;
+
 const char runCmd[] = "run";
 const char printCmd[] = "print";
 const char setCmd[] = "set";
@@ -78,6 +80,12 @@ int run(char *file){
 		printf("Script not found\n");
 		return -1;
 	}
+
+	if(recursionCount > 10000){
+		printf("Script contained recursion!\n");
+		return -1;
+	}
+	recursionCount++;
 
 	return script(filePtr);
 }
